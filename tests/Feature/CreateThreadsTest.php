@@ -10,6 +10,14 @@ class CreateThreadsTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function an_unauthenticated_user_cannot_see_the_create_threads_page()
+    {
+        $this->withExceptionHandling();
+        $this->get('/threads/create')
+             ->assertRedirect('/login');
+    }
+
+    /** @test */
     public function an_unauthenticated_user_cannot_create_new_threads()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
