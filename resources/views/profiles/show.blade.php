@@ -2,32 +2,38 @@
 
 @section('content')
     <div class="container">
-        <div class="page-header">
-            <h1>
-                {{ $profileUser->name }}
-                <small>{{ $profileUser->created_at->diffForHumans() }}</small>        
-            </h1>
-        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
 
-        @foreach($threads as $thread)
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="level">
-                        <span class="flex">
-                            <a href="{{ route('profile', $thread->owner) }}">{{ $thread->owner->name }}</a> posted: {{ $thread->title }}
-                        </span>    
-                        <span>{{ $thread->created_at->diffForHumans() }}</span>
+                 <div class="page-header">
+                    <h1>
+                        {{ $profileUser->name }}
+                        <small>{{ $profileUser->created_at->diffForHumans() }}</small>        
+                    </h1>
+                </div>
+                
+                @foreach($threads as $thread)
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="level">
+                                <span class="flex">
+                                    <a href="{{ route('profile', $thread->owner) }}">{{ $thread->owner->name }}</a> posted: <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
+                                </span>    
+                                <span>{{ $thread->created_at->diffForHumans() }}</span>
+                            </div>
+                            
+                        </div>
+
+                        <div class="panel-body">
+                                {{ $thread->body }}
+                        </div>
                     </div>
-                    
-                </div>
+                @endforeach
 
-                <div class="panel-body">
-                        {{ $thread->body }}
-                </div>
+                {{ $threads->links() }}
+
             </div>
-        @endforeach
-
-        {{ $threads->links() }}
+        </div>
 
     </div>    
 @endsection
