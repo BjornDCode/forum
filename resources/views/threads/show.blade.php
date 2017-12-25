@@ -28,14 +28,7 @@
                     </div>
                 </div>
 
-                <replies :data="{{ $thread->replies }}" 
-                    @remove="repliesCount--" 
-                    @added="repliesCount++"
-                    >        
-                </replies>
-
-                {{-- {{ $replies->links() }} --}}   
-
+                <replies @remove="repliesCount--" @added="repliesCount++"></replies>
             </div>
 
             <div class="col-md-4">
