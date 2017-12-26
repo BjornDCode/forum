@@ -67,12 +67,16 @@
         methods: {
             update() {
                 axios.patch('/replies/' + this.data.id, {
-                    body: this.body
-                })
+                        body: this.body
+                    })
+                    .catch(error => {
+                        flash(error.response.data, 'danger');
+                    })
+                    .then(({data}) => {
+                        flash('The reply has been updated');
+                        this.editing = false;
+                    });
 
-                this.editing = false;
-
-                flash('The reply has been updated');
             },
 
             destroy() {
