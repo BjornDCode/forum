@@ -12,8 +12,6 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function an_unauthenticated_user_may_not_participate_in_forum_threads()
     {
-        // $this->expectException('Illuminate\Auth\AuthenticationException');
-
         $this->withExceptionHandling()
              ->post('threads/channel/1/replies', [])
              ->assertRedirect('/login');
@@ -108,6 +106,8 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function replies_that_contain_spam_will_not_be_created()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create('App\Thread');
@@ -115,13 +115,15 @@ class ParticipateInForumTest extends TestCase
             'body' => 'Yahoo Customer Support'
         ]);
 
-        $this->post($thread->path() . '/replies', $reply->toArray())
+        $this->json('post', $thread->path() . '/replies', $reply->toArray())
              ->assertStatus(422);
     }
 
     /** @test */
     public function a_user_may_only_reply_a_maximum_of_once_per_minute()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create('App\Thread');
