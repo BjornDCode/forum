@@ -1,4 +1,8 @@
- @extends('layouts.app')
+@extends('layouts.app')
+
+@section('head')
+    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+@endsection
 
 @section('content')
 <thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
